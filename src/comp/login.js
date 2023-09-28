@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { Client, Account } from 'appwrite';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ email: '', password: '' });
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -17,66 +18,75 @@ const Login = () => {
   const validateEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(value);
-  }
+  };
 
   const validatePassword = (value) => {
     return value.length >= 6;
-  }
+  };
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
-    setErrors(prevErrors => ({ ...prevErrors, email: validateEmail(value) ? '' : 'Invalid email address' }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      email: validateEmail(value) ? '' : 'Invalid email address',
+    }));
   };
 
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    setErrors(prevErrors => ({ ...prevErrors, password: validatePassword(value) ? '' : 'Password must be at least 6 characters long' }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      password: validatePassword(value) ? '' : 'Password must be at least 6 characters long',
+    }));
   };
 
   const handleSubmission = async (e) => {
-    e.preventDefault(); // Prevent form submission
-  
+    e.preventDefault();
+
     const client = new Client();
     const account = new Account(client);
-  
+
     client
-      .setEndpoint("https://cloud.appwrite.io/v1")
-      .setProject("651525be318d3396ab36");
-  
+      .setEndpoint('https://cloud.appwrite.io/v1')
+      .setProject('651525be318d3396ab36');
+
     const emailValid = validateEmail(email);
     const passwordValid = validatePassword(password);
-  
+
     setErrors({
       email: emailValid ? '' : 'Invalid email address',
-      password: passwordValid ? '' : 'Password must be at least 6 characters long'
+      password: passwordValid ? '' : 'Password must be at least 6 characters long',
     });
-  
+
     if (emailValid && passwordValid) {
       try {
         const promise = account.createEmailSession(email, password);
-  
-        promise.then(function (response) {
-          console.log("Success", response); // Success
-          navigate("/home");
-        }, function (error) {
-          console.log(error); // Failure
-          console.error("Invalid credentials. Please check your inputs.");
-          setErrors(prevErrors => ({
-            ...prevErrors,
-            email: 'Invalid email or password',
-            password: 'Invalid email or password'
-          }));
-        });
-  
-        console.log("Appwrite is connected");
+
+        promise.then(
+          function (response) {
+            console.log('Success', response);
+            navigate('/home');
+          },
+          function (error) {
+            console.log(error);
+            console.error('Invalid credentials. Please check your inputs.');
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              email: 'Invalid email or password',
+              password: 'Invalid email or password',
+            }));
+          }
+        );
+
+        console.log('Appwrite is connected');
       } catch (error) {
         console.error(error);
       }
     }
-  }
-  
+  };
+
   return (
     <div className="login-container-body">
       <div className="login-container">
@@ -106,22 +116,22 @@ const Login = () => {
                       name="password"
                       className="input-field"
                       value={password}
+
                       onChange={handlePasswordChange}
                     />
-                    {errors.password && <span className="error-message">{errors.password}</span>}
-                    <div
-                      className="password-toggle"
-                      onClick={handleTogglePassword}
-                    >
-                      👁️
+                    <div className="password-toggle" onClick={handleTogglePassword}>
+                      {showPassword ? <Eye size={20} /> : <EyeSlash size={20} />}
                     </div>
                   </div>
+                  {errors.password && <span className="error-message">{errors.password}</span>}
                 </div>
                 <div className="forgot-password">
                   <a href="#">Forgot Password?</a>
                 </div>
                 <div className="login-button">
-                  <button type="submit" onClick={handleSubmission} className="login-btn">Login</button>
+                  <button type="submit" onClick={handleSubmission} className="login-btn">
+                    Login
+                  </button>
                 </div>
               </form>
             </div>
@@ -130,6 +140,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

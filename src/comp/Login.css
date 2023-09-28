@@ -1,13 +1,10 @@
-
-/* Keep your existing code */
-
-/* Add a media query for smaller screens */
 @media (max-width: 768px) {
     .login-content {
-        width: 80%; /* Adjust the width for smaller screens */
+        width: 80%;
     }
+
     .login-btn {
-        width: 100%; /* Make the button full width */
+        width: 100%;
     }
 }
 
@@ -43,10 +40,10 @@
     transform: translate(-50%, -50%);
     width: 30%;
     height: 90%;
-    /* background-color: rgb(161, 161, 161);
-     */
+
+
     background-color: white;
-     padding: 20px;
+    padding: 20px;
     border-radius: 10px;
 }
 
@@ -56,6 +53,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    border-radius: 30px;
     margin-bottom: 10px;
 }
 
@@ -64,8 +62,7 @@
     color: #fff;
     padding: 12px 24px;
     border: none;
-    border-radius: 30px;
-    /* Use a large value to get a round button */
+    border-radius: 5px;
     cursor: pointer;
     width: 30%;
     font-size: 16px;
@@ -86,10 +83,23 @@
     transform: translateY(-50%);
     cursor: pointer;
 }
+
 .error-message {
     color: red;
     font-size: 14px;
     margin-top: 5px;
     display: block;
-  }
-  
+}
+
+.password-toggle {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-toggle svg {
+    width: 20px;
+    height: auto;
+}
