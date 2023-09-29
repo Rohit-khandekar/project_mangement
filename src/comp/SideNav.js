@@ -22,18 +22,19 @@ function SideNav() {
   return (
     <nav className="side-nav">
       <ul>
+      <li className="text-center">
+  <Link to="/home" className={location.pathname === '/home' ? 'active' : ''}>
+    <img
+      src={dashboard}
+      alt="Dashboard"
+      width="24"
+      height="24"
+    />
+  </Link>
+</li>
+
         <li className="text-center">
-          <Link to="/dashboard" className={location.pathname === '/dashboard' ? 'active' : ''}>
-            <img
-              src={dashboard}
-              alt="Dashboard"
-              width="24"
-              height="24"
-            />
-          </Link>
-        </li>
-        <li className="text-center">
-          <Link to="/projects" className={location.pathname === '/projects' ? 'active' : ''}>
+          <Link to="/projectlist" className={location.pathname === '/projectlist' ? 'active' : ''}>
             <img
               src={projectslist}
               alt="Projects"
@@ -43,15 +44,15 @@ function SideNav() {
           </Link>
         </li>
         <li className="text-center">
-          <Link to="/create-project" className={location.pathname === '/create-project' ? 'active' : ''}>
-            <img
-              src={createproject}
-              alt="Create Project"
-              width="24"
-              height="24"
-            />
-          </Link>
-        </li>
+  <Link to="/insertProject" className={location.pathname === '/insertProject' ? 'active' : ''}>
+    <img
+      src={createproject}
+      alt="Create Project"
+      width="24"
+      height="24"
+    />
+  </Link>
+</li>
         <li className="logout-button"> {/* Apply the logout-button class */}
           <button onClick={handleLogout}>
             <img
