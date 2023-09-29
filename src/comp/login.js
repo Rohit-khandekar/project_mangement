@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import './Login.css';
-import { Client, Account } from 'appwrite';
-import { useNavigate } from 'react-router-dom';
-import { Eye, EyeSlash } from 'react-bootstrap-icons';
+import React, { useState } from "react";
+import "./Login.css";
+import { Client, Account } from "appwrite";
+import { useNavigate } from "react-router-dom";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
+import Logo from "./IMG/Logo.svg";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({ email: '', password: '' });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
   const handleTogglePassword = () => {
@@ -29,7 +30,7 @@ const Login = () => {
     setEmail(value);
     setErrors((prevErrors) => ({
       ...prevErrors,
-      email: validateEmail(value) ? '' : 'Invalid email address',
+      email: validateEmail(value) ? "" : "Invalid email address",
     }));
   };
 
@@ -38,7 +39,9 @@ const Login = () => {
     setPassword(value);
     setErrors((prevErrors) => ({
       ...prevErrors,
-      password: validatePassword(value) ? '' : 'Password must be at least 6 characters long',
+      password: validatePassword(value)
+        ? ""
+        : "Password must be at least 6 characters long",
     }));
   };
 
@@ -49,15 +52,17 @@ const Login = () => {
     const account = new Account(client);
 
     client
-      .setEndpoint('https://cloud.appwrite.io/v1')
-      .setProject('651525be318d3396ab36');
+      .setEndpoint("https://cloud.appwrite.io/v1")
+      .setProject("651525be318d3396ab36");
 
     const emailValid = validateEmail(email);
     const passwordValid = validatePassword(password);
 
     setErrors({
-      email: emailValid ? '' : 'Invalid email address',
-      password: passwordValid ? '' : 'Password must be at least 6 characters long',
+      email: emailValid ? "" : "Invalid email address",
+      password: passwordValid
+        ? ""
+        : "Password must be at least 6 characters long",
     });
 
     if (emailValid && passwordValid) {
@@ -66,21 +71,21 @@ const Login = () => {
 
         promise.then(
           function (response) {
-            console.log('Success', response);
-            navigate('/home');
+            console.log("Success", response);
+            navigate("/home");
           },
           function (error) {
             console.log(error);
-            console.error('Invalid credentials. Please check your inputs.');
+            console.error("Invalid credentials. Please check your inputs.");
             setErrors((prevErrors) => ({
               ...prevErrors,
-              email: 'Invalid email or password',
-              password: 'Invalid email or password',
+              email: "Invalid email or password",
+              password: "Invalid email or password",
             }));
           }
         );
 
-        console.log('Appwrite is connected');
+        console.log("Appwrite is connected");
       } catch (error) {
         console.error(error);
       }
@@ -91,49 +96,67 @@ const Login = () => {
     <div className="login-container-body">
       <div className="login-container">
         <div className="background-image">
-          <div className="login-content">
-            <h1>Login</h1>
-            <div className="form-container">
-              <form>
-                <div className="form-group">
-                  <label htmlFor="email">Email:</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="input-field"
-                    value={email}
-                    onChange={handleEmailChange}
-                  />
-                  {errors.email && <span className="error-message">{errors.email}</span>}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password:</label>
-                  <div className="password-input-container">
+          <div className="center-content">
+            <img src={Logo} alt="Logo" className="logo" />
+            <h1 className="title">Online Project Management</h1>
+            <div className="login-content">
+              <h1>Login</h1>
+              <div className="form-container">
+                <form>
+                  <div className="form-group">
+                    <label htmlFor="email">Email:</label>
                     <input
-                      type={showPassword ? 'text' : 'password'}
-                      id="password"
-                      name="password"
+                      type="email"
+                      id="email"
+                      name="email"
                       className="input-field"
-                      value={password}
-
-                      onChange={handlePasswordChange}
+                      value={email}
+                      onChange={handleEmailChange}
                     />
-                    <div className="password-toggle" onClick={handleTogglePassword}>
-                      {showPassword ? <Eye size={20} /> : <EyeSlash size={20} />}
-                    </div>
+                    {errors.email && (
+                      <span className="error-message">{errors.email}</span>
+                    )}
                   </div>
-                  {errors.password && <span className="error-message">{errors.password}</span>}
-                </div>
-                <div className="forgot-password">
-                  <a href="#">Forgot Password?</a>
-                </div>
-                <div className="login-button">
-                  <button type="submit" onClick={handleSubmission} className="login-btn">
-                    Login
-                  </button>
-                </div>
-              </form>
+                  <div className="form-group">
+                    <label htmlFor="password">Password:</label>
+                    <div className="password-input-container">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        className="input-field"
+                        value={password}
+                        onChange={handlePasswordChange}
+                      />
+                      <div
+                        className="password-toggle"
+                        onClick={handleTogglePassword}
+                      >
+                        {showPassword ? (
+                          <Eye size={20} />
+                        ) : (
+                          <EyeSlash size={20} />
+                        )}
+                      </div>
+                    </div>
+                    {errors.password && (
+                      <span className="error-message">{errors.password}</span>
+                    )}
+                  </div>
+                  <div className="forgot-password">
+                    <a href="#" >Forgot Password?</a>
+                  </div>
+                  <div className="login-button">
+                    <button
+                      type="submit"
+                      onClick={handleSubmission}
+                      className="login-btn"
+                    >
+                      Login
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
