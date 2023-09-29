@@ -2,7 +2,7 @@
 
 
 
-/* .App {
+.App {
   text-align: center;
 }
 
@@ -18,8 +18,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,6 +30,39 @@
 .App-link {
   color: #61dafb;
 }
+.header-svg {
+  height: 80px; /* Adjust the height as needed */
+}
+/* App.css */
+
+/* Style for the side navigation bar */
+.side-nav {
+  background-color: #ffffff;
+  color: white;
+  width: 80px; /* Adjust the width as needed */
+  height: 100%; /* Make it cover the entire height of the header */
+  position: fixed; /* Fix it in place */
+  top: 0;
+  left: 0;
+  margin: auto;
+  overflow-y: auto; /* Add scrolling if needed */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+}
+
+.side-nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.side-nav ul li {
+  padding: 10px;
+}
+
+/* Style for the header content */
+.header-content {
+  display: flex;
+  align-items: center;
+}
 
 @keyframes App-logo-spin {
   from {
@@ -39,4 +71,4 @@
   to {
     transform: rotate(360deg);
   }
-} */
+} 
