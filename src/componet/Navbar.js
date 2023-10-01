@@ -41,9 +41,9 @@ const Navbar = () => {
       zIndex={1}
     >
       <Flex direction={{ base: 'row', md: 'column' }} gap={'50px'} rowGap={'50px'} align="center">
-        <Link to="/">
+        <Link to="/dashboard">
           <Box mb={4}>
-            <img src={location.pathname === '/' ? dashboardactive : dashboardicon} alt="Dashboard" />
+            <img src={location.pathname === '/dashboard' ? dashboardactive : dashboardicon} alt="Dashboard" />
           </Box>
         </Link>
         <Link to="/list">

@@ -79,7 +79,7 @@ const Login = () => {
         promise.then(
           function (response) {
             console.log('Success', response);
-            navigate('/add-project'); // Navigate to /add-project on success
+            navigate('/dashboard'); // Navigate to /add-project on success
           },
           function (error) {
             console.log('Error:', error);
