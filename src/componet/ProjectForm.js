@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Box, Button, Card, Flex, FormControl, FormLabel, Input, Select, SimpleGrid, Text } from '@chakra-ui/react';
+import { Client, Databases, ID } from 'appwrite';
 
 const ProjectForm = () => {
     const [formData, setFormData] = useState({
-        Startdate: "",
-        Enddate: "",
+        Startdate: "11-11-2023",
+        Enddate: "12-12-2023",
         Reason: "For Business",
         Type: "internal",
         Division: "Filters",
@@ -12,7 +13,7 @@ const ProjectForm = () => {
         Priority: "High",
         Department: "Strategy",
         Location: "Pune",
-        Projecttheme: "",
+        ProjectName: "", 
     });
 
     const [message, setMessage] = useState("");
@@ -23,27 +24,35 @@ const ProjectForm = () => {
     };
 
     const handleInputStartDateChange = (e) => {
-        setFormData((prev) => ({
-            ...prev,
-            Startdate: e.target.value,
-        }));
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleInputEndDateChange = (e) => {
-        setFormData((prev) => ({
-            ...prev,
-            Enddate: e.target.value,
-        }));
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
+    const handleSubmit = async () => {
+        console.log(formData);
+        try {
+            const client = new Client()
+            .setEndpoint('https://cloud.appwrite.io/v1')
+            .setProject('651525be318d3396ab36');
+            
+            const databases = new Databases(client);
 
-    const handleSubmit = () => {
-        if (formData.Projecttheme !== "" && formData.Startdate !== "" && formData.Enddate !== "") {
-            // Simulating API call
-            setTimeout(() => {
-                setMessage("Project created successfully!");
-            }, 1000);
-        } else {
-            setMessage("Please fill the required fields first!");
+            const response = await databases.createDocument(
+                '651986d9524fd55c4ce1', // Replace with your Appwrite database ID
+                '65198713b0e1840cce11', // Replace with your Appwrite collection ID
+                ID.unique(),
+                formData
+            );
+       
+            console.log(response);
+            setMessage("Project created successfully!");
+        } catch (error) {
+            console.error(error);
+            setMessage("Failed to create project. Please try again later.");
         }
     };
 
@@ -68,11 +77,11 @@ const ProjectForm = () => {
                             h="70px"
                             p="5"
                             placeholder="Enter Project Theme"
-                            name="Projecttheme"
-                            type="Projecttheme"
+                            name="ProjectName"
+                            type="ProjectName"
                             onChange={handleInputChange}
                         />
-                        {formData.Projecttheme === "" && (
+                        {formData.ProjectName === "" && (
                             <Text mt={2} color="red.500" textAlign="left">
                                 Project theme is required!
                             </Text>
@@ -193,43 +202,43 @@ const ProjectForm = () => {
                             </Select>
                         </FormControl>
 
-                        <FormControl>
-                            <FormLabel fontWeight={400} color="gray">
-                                Start Date as per Project Plan
-                            </FormLabel>
-                            <Box>
-                                <Input
-                                    h="50px"
-                                    type="date"
-                                    onChange={handleInputStartDateChange}
-                                    border="1px solid black"
-                                />
-                                {formData.Startdate === "" && (
-                                    <Text mt={2} color="red.500" textAlign="left">
-                                        StartDate is required!
-                                    </Text>
-                                )}
-                            </Box>
-                        </FormControl>
+            <FormControl>
+                <FormLabel fontWeight={400} color="gray">
+                    Start Date as per Project Plan
+                </FormLabel>
+                <Box>
+                    <Input
+                        h="50px"
+                        type="date"
+                        onChange={handleInputStartDateChange}
+                        border="1px solid black"
+                    />
+                    {!formData.Startdate && (
+                        <Text mt={2} color="red.500" textAlign="left">
+                            Start Date is required!
+                        </Text>
+                    )}
+                </Box>
+            </FormControl>
 
-                        <FormControl>
-                            <FormLabel fontWeight={400} color="gray">
-                                End Date as per Project Plan
-                            </FormLabel>
-                            <Box>
-                                <Input
-                                    h="50px"
-                                    type="date"
-                                    border="1px solid black"
-                                    onChange={handleInputEndDateChange}
-                                />
-                                {formData.Enddate === "" && (
-                                    <Text mt={2} color="red.500" textAlign="left">
-                                        EndDate is required!
-                                    </Text>
-                                )}
-                            </Box>
-                        </FormControl>
+            <FormControl>
+                <FormLabel fontWeight={400} color="gray">
+                    End Date as per Project Plan
+                </FormLabel>
+                <Box>
+                    <Input
+                        h="50px"
+                        type="date"
+                        onChange={handleInputEndDateChange}
+                        border="1px solid black"
+                    />
+                    {!formData.Enddate && (
+                        <Text mt={2} color="red.500" textAlign="left">
+                            End Date is required!
+                        </Text>
+                    )}
+                </Box>
+            </FormControl>
 
                         <FormControl>
                             <FormLabel fontWeight={400} color="gray">
