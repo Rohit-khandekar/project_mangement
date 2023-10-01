@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Flex, Input, Button, Select, Text, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 import Paginations from './Pagination';
+import { Client, Databases, Query } from "appwrite";
 
 const List = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,7 +11,6 @@ const List = () => {
   const [screensize, setScreensize] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(false);
   const totalPage = 10; // Set the total number of pages
-
   const sortlist = [
     "Priority", "Projecttheme", "Reason", "Type", "Division", "Category",
     "Department", "Startdate", "Enddate", "LocationL", "Status"
@@ -32,13 +32,33 @@ const List = () => {
     // Logic for canceling item with id
   };
 
+  const client = new Client()
+  .setEndpoint('https://cloud.appwrite.io/v1')
+  .setProject('651525be318d3396ab36');
+
+  const databases = new Databases(client);
+
   const fetchData = () => {
     setIsLoading(true);
-    // Perform your data fetching logic here
-    // For example, fetch data using fetch or axios
-    // Update the `data` state and set isLoading to false after data fetching
-    setIsLoading(false);
+  
+    const promise = databases.listDocuments(
+      '651986d9524fd55c4ce1',
+      '65198713b0e1840cce11',
+    );
+  
+    promise.then(
+      function (response) {
+        console.log('Response from Appwrite:', response); // Add this line to log the response
+        setData(response.documents);
+        setIsLoading(false);
+      },
+      function (error) {
+        console.log('Error fetching data from Appwrite:', error); // Add this line to log any errors
+        setIsLoading(false);
+      }
+    );
   };
+  
 
   useEffect(() => {
     fetchData();
@@ -51,7 +71,7 @@ const List = () => {
   };
 
   const handleNext = () => {
-    // Add logic here to prevent exceeding the total number of pages
+
     setPage((prev) => prev + 1);
   };
   return (
