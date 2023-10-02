@@ -1,22 +1,19 @@
-
 import React from 'react';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './comp/login';
-import Home from './comp/home';
-import InsertProject from './comp/InsertProject';
-import ProjectList from './comp/ProjectList';
+import MainRoutes from './AllRoutes/MainRoutes';
+import Navbar from './componet/Navbar';
+import { Box, Flex } from '@chakra-ui/react';
+
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/insertProject" element={<InsertProject />} />
-          <Route path="/projectlist" element={<ProjectList />} />
-        </Routes>
-      </BrowserRouter>
+      <Flex direction={{base:"row",md:"column"}}>
+        <Box w={{base:"",md:"80px"}} >
+          <Navbar />
+        </Box>
+        <Flex direction="column" w={{base:"100%",md:"calc(100% - 80px)" }} ml={{md:"80px"}}>
+          <MainRoutes />
+        </Flex>
+      </Flex>
     </div>
   );
 }
